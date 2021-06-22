@@ -42,7 +42,9 @@ class memoriaDir:
             if x == "Livre":
                 self.blocklist[i] = m2
                 break
-
+    def checkNameDir(self, dir, nome):
+        if dir.nomedir == nome:
+            return True
 
     def accessdir(self, dir, nome):
             if dir.nomedir == nome:
@@ -87,17 +89,22 @@ def interface(dir):
                 print("Arquivo ja existe")
             #tamMax
         elif inp == 2:  #Criar Dir
-                freeSpc -= blockTam
-                nome = input("Nome do diretorio: ")
-                existe = False
-                for x in dir.blocklist:
-                    if x == nome:
-                        existe = True
-                if existe == False:
-                    dir.addDir(nome)
-                    print(dir.blocklist)
-                else:
-                    print("Diretorio ja existe")
+            freeSpc -= blockTam
+            nome = input("Nome do diretorio: ")
+            existe = False
+            for x in dir.blocklist:
+                if x == nome:
+                    existe = True
+
+            for i,x in enumerate(dir.blocklist):
+                if type(dir.blocklist[i]) != str and dir.checkNameDir(dir.blocklist[i], nome):
+                    existe == True
+                
+            if existe == False:
+                dir.addDir(nome)
+                print(dir.blocklist)
+            else:
+                print("Nome ja existe")
         elif inp == 3:  #Acessar Dir
             nome = input("Digite o nome do diretorio a acessar: ")
             for i,x in enumerate(dir.blocklist):
@@ -150,3 +157,4 @@ def interface(dir):
 
 m1 = memoriaDir(input("Nome da unidade de memoria ou diretorio: "))
 interface(m1)
+print("\nFIM")
